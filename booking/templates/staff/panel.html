@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}Staff Panel 
 {% endblock title %} 
+{% load custom_filters %}
 {% block 'booking/static/css/style.css' %}
 {% endblock 'booking/static/css/style.css' %} 
 {% block body %}
@@ -282,4 +283,4 @@
         </div>
     </div>
 </div>
-<!--Modal for Add New Room Ends here-->
+{% endblock body %}
