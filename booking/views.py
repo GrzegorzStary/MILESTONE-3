@@ -19,7 +19,7 @@ def homepage(request):
             hotel = Hotels.objects.all().get(id=int(request.POST['search_location']))
             rr = []
             
-            #for finding the reserved rooms on this time period for excluding from the query set
+            # For finding the reserved rooms on this time period for excluding from the query set
             for each_reservation in Reservation.objects.all():
                 if str(each_reservation.check_in) < str(request.POST['cin']) and str(each_reservation.check_out) < str(request.POST['cout']):
                     pass
@@ -80,7 +80,7 @@ def user_sign_up(request):
         messages.success(request,"Registration Successfull")
         return redirect("userloginpage")
     return HttpResponse('Access Denied')
-#staff sign up
+# Staff Sign-up
 def staff_sign_up(request):
     if request.method =="POST":
         user_name = request.POST['username']
@@ -107,3 +107,60 @@ def staff_sign_up(request):
     else:
 
         return HttpResponse('Access Denied')
+    
+    # User Login and Sign-Up Page
+    
+def user_log_sign_page(request):
+    if request.method == 'POST':
+        email = request.POST['email']
+        password = request.POST['pswd']
+
+        user = authenticate(username=email,password=password)
+        try:
+            if user.is_staff:
+                
+                messages.error(request,"Incorrect username or Password")
+                return redirect('staffloginpage')
+        except:
+            pass
+        
+        if user is not None:
+            login(request,user)
+            messages.success(request,"successful logged in")
+            print("Login successfull")
+            return redirect('homepage')
+        else:
+            messages.warning(request,"Incorrect username or password")
+            return redirect('userloginpage')
+
+    response = render(request,'user/userlogsign.html')
+    return HttpResponse(response)
+
+# Log-out for Admin and User 
+def logoutuser(request):
+    if request.method =='GET':
+        logout(request)
+        messages.success(request,"Logged out successfully")
+        print("Logged out successfully")
+        return redirect('homepage')
+    else:
+        print("logout unsuccessfull")
+        return redirect('userloginpage')
+
+# Staff Login and Signup Page
+def staff_log_sign_page(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+
+        user = authenticate(username=username,password=password)
+        
+        if user.is_staff:
+            login(request,user)
+            return redirect('staffpanel')
+        
+        else:
+            messages.success(request,"Incorrect username or password")
+            return redirect('staffloginpage')
+    response = render(request,'staff/stafflogsign.html')
+    return HttpResponse(response)
