@@ -3,8 +3,8 @@ from django.urls import path
 import booking.views as views
 
 urlpatterns = [
-    path('', views.home,name="home"),
-    path('home', views.home,name="home"),
+    path('', views.home,name="homepage"),
+    path('home', views.home,name="homepage"),
     path('about', views.aboutpage,name="aboutpage"),
     path('contact', views.contactpage,name="contactpage"),
     path('user', views.user_log_sign_page,name="userloginpage"),
