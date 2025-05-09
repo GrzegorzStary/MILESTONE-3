@@ -223,27 +223,41 @@ def edit_room(request):
 def add_new_room(request):
     if request.user.is_staff == False:
         return HttpResponse('Access Denied')
+
     if request.method == "POST":
+        # Ensure the 'hotel' field is included in the form data
+        hotel_id = request.POST.get('hotel')
+        if not hotel_id:
+            messages.error(request, "Hotel selection is required.")
+            return redirect('staffpanel')  # Or you can return to the room creation page
+
+        try:
+            hotel = Hotels.objects.get(id=int(hotel_id))
+        except Hotels.DoesNotExist:
+            messages.error(request, "Hotel not found.")
+            return redirect('staffpanel')  # Or handle as appropriate
+
         total_rooms = len(Rooms.objects.all())
         new_room = Rooms()
-        hotel = Hotels.objects.all().get(id = int(request.POST['hotel']))
-        print(f"id={hotel.id}")
-        print(f"name={hotel.name}")
-
-
+        
+        # Assign values to the new room object from the POST data
         new_room.roomnumber = total_rooms + 1
-        new_room.room_type  = request.POST['roomtype']
-        new_room.capacity   = int(request.POST['capacity'])
-        new_room.size       = int(request.POST['size'])
-        new_room.capacity   = int(request.POST['capacity'])
-        new_room.hotel      = hotel
-        new_room.status     = request.POST['status']
-        new_room.price      = request.POST['price']
-
+        new_room.room_type  = request.POST.get('roomtype')  # Safely access using .get()
+        new_room.capacity   = int(request.POST.get('capacity', 0))  # Default to 0 if not provided
+        new_room.size       = int(request.POST.get('size', 0))  # Default to 0 if not provided
+        new_room.status     = request.POST.get('status')
+        new_room.price      = request.POST.get('price', 0)  # Default to 0 if not provided
+        
+        new_room.hotel      = hotel  # Associate the new room with the selected hotel
+        
+        # Save the room to the database
         new_room.save()
-        messages.success(request,"New Room Added Successfully")
-    
-    return redirect('staffpanel')
+
+        messages.success(request, "New Room Added Successfully")
+        return redirect('staffpanel')  # Redirect back to staff panel or another page
+
+    # If the request is not POST, render the page with the form
+    return render(request, 'staff/add_new_room.html')
 
 # Booking Room Page
 
