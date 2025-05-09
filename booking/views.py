@@ -136,7 +136,7 @@ def user_log_sign_page(request):
             messages.warning(request,"Incorrect username or password")
             return redirect('userloginpage')
 
-    response = render(request,'user/userlogsign.html')
+    response = render(request,'user/user_log.html')
     return HttpResponse(response)
 
 # Log-out for Admin and User 
@@ -167,7 +167,7 @@ def staff_log_sign_page(request):
         else:
             messages.success(request,"Incorrect username or password")
             return redirect('staffloginpage')
-    response = render(request,'staff/stafflogsign.html')
+    response = render(request,'staff/staff_log.html')
     return HttpResponse(response)
 
 # Staff Panel Page
@@ -214,7 +214,7 @@ def edit_room(request):
     
         room_id = request.GET['roomid']
         room = Rooms.objects.all().get(id=room_id)
-        response = render(request,'staff/editroom.html',{'room':room})
+        response = render(request,'staff/edit_room.html',{'room':room})
         return HttpResponse(response)
 
 # For Adding Rooms
@@ -250,7 +250,7 @@ def add_new_room(request):
 @login_required(login_url='/user')
 def book_room_page(request):
     room = Rooms.objects.all().get(id=int(request.GET['roomid']))
-    return HttpResponse(render(request,'user/bookroom.html',{'room':room}))
+    return HttpResponse(render(request,'user/book_room.html',{'room':room}))
 
 # For Booking The Room
 
@@ -307,7 +307,7 @@ def view_room(request):
     room = Rooms.objects.all().get(id=room_id)
 
     reservation = Reservation.objects.all().filter(room=room)
-    return HttpResponse(render(request,'staff/viewroom.html',{'room':room,'reservations':reservation}))
+    return HttpResponse(render(request,'staff/view_room.html',{'room':room,'reservations':reservation}))
 
 @login_required(login_url='/user')
 def user_bookings(request):
@@ -318,7 +318,7 @@ def user_bookings(request):
     bookings = Reservation.objects.all().filter(guest=user)
     if not bookings:
         messages.warning(request,"No Bookings Found")
-    return HttpResponse(render(request,'user/mybookings.html',{'bookings':bookings}))
+    return HttpResponse(render(request,'user/my_bookings.html',{'bookings':bookings}))
 
 @login_required(login_url='/staff')
 def add_new_location(request):
@@ -353,5 +353,5 @@ def all_bookings(request):
     bookings = Reservation.objects.all()
     if not bookings:
         messages.warning(request,"No Bookings Found")
-    return HttpResponse(render(request,'staff/allbookings.html',{'bookings':bookings}))
+    return HttpResponse(render(request,'staff/all_bookings.html',{'bookings':bookings}))
     
