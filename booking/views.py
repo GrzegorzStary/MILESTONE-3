@@ -8,10 +8,7 @@ from django.contrib.auth.decorators import login_required
 import datetime
 
 # Create your views here.
-
-# Homepage
-
-def homepage(request):
+def home(request):
     all_location = Hotels.objects.values_list('location','id').distinct().order_by()
     if request.method =="POST":
         try:
