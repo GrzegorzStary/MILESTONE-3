@@ -25,7 +25,8 @@ body {
     display: flex;
     flex-direction: column;
     font-family: var(--body);
-    font-weight: 900;
+    font-weight: 500;
+
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -43,11 +44,19 @@ footer {
 }
 
 /* Heder */
-.navbar {
+.my-nav {
     background-color: var(--secondary);
-    box-shadow: var(--primary);
+    color: var(--primary);
 }
 
 a.nav-link {
+    color: var(--primary);
+    font-weight: 700;
+    font-size: larger;
+    flex-direction: column;
+    text-align: center;
+}
+a.nav-link:hover {
     color: var(--white);
 }
+
