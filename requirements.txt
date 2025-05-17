@@ -1,4 +1,8 @@
 asgiref==3.8.1
+crispy-bootstrap5==2025.4
 Django==5.2.1
 django-allauth==65.8.0
+django-crispy-forms==2.4
+gunicorn==20.1.0
+setuptools==80.7.1
 sqlparse==0.5.3
