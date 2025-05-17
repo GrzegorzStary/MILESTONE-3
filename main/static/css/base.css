@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Ancizar+Serif:ital,wght@0,300..900;1,300..900&family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+    /* Font Families */
+--title: 'Ancizar Serif', Serif;
+--body: 'Noto Serif', Georgia, Serif;
+
+    /* Colors */
+--background: #f7f3e3;
+--secondary: #36393b;
+--primary: #ee772f;
+--buttons: #9984d4;
+--white: #ffffff;
+--black: #000000;
+
+    /* Utils */
+--border: 1px solid;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    font-family: var(--body);
+    font-weight: 900;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--title);
+}
+
+main {
+    flex: 1 0 auto;
+    background-color: var(--primary);
+}
+
+/* Footer */
+footer {
+    flex-shrink: 0;
+}
+
+/* Heder */
+.navbar {
+    background-color: var(--secondary);
+    box-shadow: var(--primary);
+}
+
+a.nav-link {
+    color: var(--white);
+}
